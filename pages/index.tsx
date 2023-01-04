@@ -6,7 +6,7 @@ import Widgets from '../components/Widgets'
 
 
 
-export default function Home() {
+export default function Home({newsResults}) {
   return (
     <>
       <Head>
@@ -29,7 +29,7 @@ export default function Home() {
 
 
      {/* Widgets */}
-     <Widgets/>
+     <Widgets newsResults={newsResults.articles}/>
 
 
 
@@ -39,3 +39,14 @@ export default function Home() {
     </>
   )
 }
+
+export async function getServerSideProps(){
+    const newsResults = await fetch ("https://saurav.tech/NewsAPI/top-headlines/category/business/in.json")
+    .then((res)=>res.json());
+    return{
+      props:{
+       newsResults,
+      },
+    }
+}
+
